@@ -101,7 +101,7 @@ from .utils import getRecording
 
 
 async def async_setup(hass: HomeAssistant, config: dict):
-    """Set up the Tapo: Cameras Control component from YAML."""
+    """Set up the Tapo camera local component from YAML."""
     transport_method = None
     if DOMAIN in config and isinstance(config[DOMAIN], dict):
         transport_method = config[DOMAIN].get(CONF_TRANSPORT_METHOD)
@@ -268,7 +268,7 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
             )
         except Exception as e:
             LOGGER.error(
-                "Unable to connect to Tapo: Cameras Control controller: %s", str(e)
+                "Unable to connect to Tapo camera local controller: %s", str(e)
             )
             if "Invalid authentication data" in str(e):
                 raise ConfigEntryAuthFailed(e)
@@ -371,7 +371,7 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
 
         except Exception as e:
             LOGGER.error(
-                "Unable to connect to Tapo: Cameras Control controller: %s", str(e)
+                "Unable to connect to Tapo camera local controller: %s", str(e)
             )
             if "Invalid authentication data" in str(e):
                 raise ConfigEntryAuthFailed(e)
@@ -585,9 +585,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
             ]
         )
 
-    LOGGER.debug("Starting setup of Tapo: Cameras Control")
+    LOGGER.debug("Starting setup of Tapo camera local")
 
-    """Set up the Tapo: Cameras Control component from a config entry."""
+    """Set up the Tapo camera local component from a config entry."""
     hass.data.setdefault(DOMAIN, {})
 
     host = entry.data.get(CONF_IP_ADDRESS)
@@ -1343,7 +1343,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
                 raise ConfigEntryNotReady(e)
             # Retry for anything else
             LOGGER.error(
-                "Unable to connect to Tapo: Cameras Control controller: %s", str(e)
+                "Unable to connect to Tapo camera local controller: %s", str(e)
             )
             raise ConfigEntryNotReady(e)
 

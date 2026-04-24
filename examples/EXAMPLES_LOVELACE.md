@@ -1,4 +1,4 @@
-# HomeAssistant - Tapo: Cameras Control Examples
+# HomeAssistant - Tapo camera local Examples
 
 Below you can find some examples of usage of this custom component in lovelace cards.
 

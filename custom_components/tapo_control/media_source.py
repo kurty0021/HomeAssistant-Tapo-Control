@@ -239,7 +239,7 @@ class TapoMediaSource(MediaSource):
 
         if device["usingCloudPassword"] is False:
             raise Unresolvable(
-                "Cloud password is required in order to play recordings.\nSet cloud password inside Settings > Devices & Services > Tapo: Cameras Control > Configure."
+                "Cloud password is required in order to play recordings.\nSet cloud password inside Settings > Devices & Services > Tapo camera local > Configure."
             )
         try:
             recordingsList = await self.hass.async_add_executor_job(

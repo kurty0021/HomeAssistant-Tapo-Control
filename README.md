@@ -2,9 +2,9 @@
 [![GitHub release](https://img.shields.io/github/release/JurajNyiri/HomeAssistant-Tapo-Control.svg)](https://github.com/JurajNyiri/HomeAssistant-Tapo-Control/releases/)
 [![HA integration usage](https://img.shields.io/badge/dynamic/json?color=41BDF5&logo=home-assistant&label=integration%20usage&suffix=%20installs&cacheSeconds=15600&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.tapo_control.total)](https://analytics.home-assistant.io/custom_integrations.json)
 
-# HomeAssistant - Tapo: Cameras Control
+# HomeAssistant - Tapo camera local
 
-Custom component - Tapo: Cameras Control - to add Tapo cameras, doorbells and chimes into Home Assistant
+Custom component - Tapo camera local - to add Tapo cameras, doorbells and chimes into Home Assistant
 
 ⭐ Now also exposing a stream for devices that have no RTSP or ONVIF capabilities.
 
@@ -14,7 +14,7 @@ Copy contents of custom_components/tapo_control/ to custom_components/tapo_contr
 
 ## Installation using HACS
 
-HACS is a community store for Home Assistant. You can install [HACS](https://github.com/custom-components/hacs) and then install Tapo: Cameras Control from the HACS store.
+HACS is a community store for Home Assistant. You can install [HACS](https://github.com/custom-components/hacs) and then install Tapo camera local from the HACS store.
 
 ## Requirements
 
@@ -48,11 +48,11 @@ Note: Version 3.8.103 and later is required.
 
 ## Usage
 
-Add cameras, doorbells or chimes via Integrations (search for `Tapo: Cameras Control`) in Home Assistant UI. You can also simply click the button below if you have MyHomeAssistant redirects set up.
+Add cameras, doorbells or chimes via Integrations (search for `Tapo camera local`) in Home Assistant UI. You can also simply click the button below if you have MyHomeAssistant redirects set up.
 
 [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=tapo_control)
 
-**Note:** There are other Tapo integrations, make sure you select `Tapo: Cameras Control`. Otherwise you might choose the one for plugs and lights, or the official HA one which has a minimum feature set compared to this integration as of December 2024.
+**Note:** There are other Tapo integrations, make sure you select `Tapo camera local`. Otherwise you might choose the one for plugs and lights, or the official HA one which has a minimum feature set compared to this integration as of December 2024.
 
 When integrating Tapo cameras, doorbells and chimes, ensure only ONE integration is used. If multiple are used at the same time it will result in conflicts and instability of connection to camera for all the integrations / services connecting to camera.
 
@@ -120,7 +120,7 @@ Integration is capable of synchronizing recordings for fast playback.
 
 Synchronization is turned off by default, you can browse media stored on camera and request it to be played. However, downloading is rather slow, so it is a good idea to enable media synchronization in background. That way, you will be able to play any synchronized media from camera instantly.
 
-You can enable this setting by navigating to `Home Assistant Settings` -> `Devices & services` and clicking the `Tapo: Cameras control` integration. There, click on the `Configure` button next to the Tapo device you wish to turn media synchronization on for, and choose `Configure media`. Here, you need to define the number of hours to synchronize. Unless it is specified, synchronization does not run. Here, you are able to also set the storage path where the synchronized recordings will be stored (defaults to /config/.storage/tapo_control).
+You can enable this setting by navigating to `Home Assistant Settings` -> `Devices & services` and clicking the `Tapo camera local` integration. There, click on the `Configure` button next to the Tapo device you wish to turn media synchronization on for, and choose `Configure media`. Here, you need to define the number of hours to synchronize. Unless it is specified, synchronization does not run. Here, you are able to also set the storage path where the synchronized recordings will be stored (defaults to /config/.storage/tapo_control).
 
 Finally, you can turn on, or off switch entity `switch.*_media_sync`.
 

@@ -1,4 +1,4 @@
-# HomeAssistant - Tapo: Cameras Control
+# HomeAssistant - Tapo camera local
 
 Custom component to add Tapo cameras into Home Assistant
 
