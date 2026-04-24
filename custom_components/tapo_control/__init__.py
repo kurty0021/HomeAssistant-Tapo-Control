@@ -485,7 +485,7 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    LOGGER.debug("Unloading tapo_control...")
+    LOGGER.debug("Unloading tapo_local...")
     await hass.config_entries.async_unload_platforms(
         entry,
         [

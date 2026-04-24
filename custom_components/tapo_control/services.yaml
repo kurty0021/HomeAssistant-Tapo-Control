@@ -4,7 +4,7 @@ save_preset:
   target:
     entity:
       domain: camera
-      integration: tapo_control
+      integration: tapo_local
   fields:
     name:
       description: "Name of the preset."
@@ -19,7 +19,7 @@ delete_preset:
   target:
     entity:
       domain: camera
-      integration: tapo_control
+      integration: tapo_local
   fields:
     preset:
       description: "PTZ preset ID or a Name. See possible presets in entity attributes"

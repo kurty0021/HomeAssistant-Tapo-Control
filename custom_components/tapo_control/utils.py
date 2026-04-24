@@ -251,7 +251,7 @@ async def getRecordings(hass, entryData, tapoController, date):
 
 
 def getEntryStorageFile(config_entry, child_id):
-    return f"tapo_control_{config_entry.entry_id}{child_id}"
+    return f"tapo_local_{config_entry.entry_id}{child_id}"
 
 
 # todo: findMedia needs to run periodically
@@ -516,7 +516,7 @@ async def deleteDir(hass, dirPath):
         os.path.exists(dirPath)
         and os.path.isdir(dirPath)
         and dirPath != "/"
-        and "tapo_control/" in dirPath
+        and "tapo_local/" in dirPath
     ):
         LOGGER.debug("Deleting folder " + dirPath + "...")
         await hass.async_add_executor_job(shutil.rmtree, dirPath)
@@ -706,7 +706,7 @@ async def getRecording(
             raise Unresolvable("Recording is currently in progress.")
 
         hass.bus.fire(
-            "tapo_control_media_downloaded",
+            "tapo_local_media_downloaded",
             {
                 "entry_id": entry_id,
                 "startDate": startDate,
@@ -2066,7 +2066,7 @@ async def setupEvents(hass, config_entry):
 
 def build_device_info(attributes: dict) -> DeviceInfo:
     return DeviceInfo(
-        identifiers={(DOMAIN, slugify(f"{attributes['mac']}_tapo_control"))},
+        identifiers={(DOMAIN, slugify(f"{attributes['mac']}_tapo_local"))},
         connections={("mac", attributes["mac"])},
         name=attributes["device_alias"],
         manufacturer=BRAND,

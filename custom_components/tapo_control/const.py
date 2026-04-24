@@ -10,7 +10,7 @@ TPLINK_DOMAIN = "tplink"
 
 CONTROL_PORT = "control_port"
 PYTAPO_REQUIRED_VERSION = "3.4.11"
-DOMAIN = "tapo_control"
+DOMAIN = "tapo_local"
 DOMAIN_CONFIG = DOMAIN + "_config"
 BRAND = "TP-Link"
 DOORBELL_UDP_PORT = 20005

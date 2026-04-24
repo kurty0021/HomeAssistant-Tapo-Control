@@ -1,6 +1,6 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 [![GitHub release](https://img.shields.io/github/release/JurajNyiri/HomeAssistant-Tapo-Control.svg)](https://github.com/JurajNyiri/HomeAssistant-Tapo-Control/releases/)
-[![HA integration usage](https://img.shields.io/badge/dynamic/json?color=41BDF5&logo=home-assistant&label=integration%20usage&suffix=%20installs&cacheSeconds=15600&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.tapo_control.total)](https://analytics.home-assistant.io/custom_integrations.json)
+[![HA integration usage](https://img.shields.io/badge/dynamic/json?color=41BDF5&logo=home-assistant&label=integration%20usage&suffix=%20installs&cacheSeconds=15600&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.tapo_local.total)](https://analytics.home-assistant.io/custom_integrations.json)
 
 # HomeAssistant - Tapo camera local
 
@@ -10,7 +10,7 @@ Custom component - Tapo camera local - to add Tapo cameras, doorbells and chimes
 
 ## Installation
 
-Copy contents of custom_components/tapo_control/ to custom_components/tapo_control/ in your Home Assistant config folder.
+Copy contents of custom_components/tapo_local/ to custom_components/tapo_local/ in your Home Assistant config folder.
 
 ## Installation using HACS
 
@@ -50,7 +50,7 @@ Note: Version 3.8.103 and later is required.
 
 Add cameras, doorbells or chimes via Integrations (search for `Tapo camera local`) in Home Assistant UI. You can also simply click the button below if you have MyHomeAssistant redirects set up.
 
-[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=tapo_control)
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=tapo_local)
 
 **Note:** There are other Tapo integrations, make sure you select `Tapo camera local`. Otherwise you might choose the one for plugs and lights, or the official HA one which has a minimum feature set compared to this integration as of December 2024.
 
@@ -91,7 +91,7 @@ Chimes:
 Additionally, following services are available for cameras with PTZ:
 
 <details>
-  <summary>tapo_control.save_preset</summary>
+  <summary>tapo_local.save_preset</summary>
 
 Saves the current PTZ position to a preset
 
@@ -99,7 +99,7 @@ Saves the current PTZ position to a preset
 </details>
 
 <details>
-  <summary>tapo_control.delete_preset</summary>
+  <summary>tapo_local.delete_preset</summary>
 
 Deletes a preset
 
@@ -120,7 +120,7 @@ Integration is capable of synchronizing recordings for fast playback.
 
 Synchronization is turned off by default, you can browse media stored on camera and request it to be played. However, downloading is rather slow, so it is a good idea to enable media synchronization in background. That way, you will be able to play any synchronized media from camera instantly.
 
-You can enable this setting by navigating to `Home Assistant Settings` -> `Devices & services` and clicking the `Tapo camera local` integration. There, click on the `Configure` button next to the Tapo device you wish to turn media synchronization on for, and choose `Configure media`. Here, you need to define the number of hours to synchronize. Unless it is specified, synchronization does not run. Here, you are able to also set the storage path where the synchronized recordings will be stored (defaults to /config/.storage/tapo_control).
+You can enable this setting by navigating to `Home Assistant Settings` -> `Devices & services` and clicking the `Tapo camera local` integration. There, click on the `Configure` button next to the Tapo device you wish to turn media synchronization on for, and choose `Configure media`. Here, you need to define the number of hours to synchronize. Unless it is specified, synchronization does not run. Here, you are able to also set the storage path where the synchronized recordings will be stored (defaults to /config/.storage/tapo_local).
 
 Finally, you can turn on, or off switch entity `switch.*_media_sync`.
 
@@ -128,7 +128,7 @@ Finally, you can turn on, or off switch entity `switch.*_media_sync`.
 
 ### Media download event
 
-Whenever a recording is downloaded (either because you requested playback or media sync picked it up), the integration fires a Home Assistant event `tapo_control_media_downloaded` with data:
+Whenever a recording is downloaded (either because you requested playback or media sync picked it up), the integration fires a Home Assistant event `tapo_local_media_downloaded` with data:
 
 - `entry_id`: Config entry id of the device
 - `startDate` / `endDate`: Recording start/end timestamps (UTC, in seconds)
@@ -139,7 +139,7 @@ Example automation trigger:
 ```yaml
 trigger:
   - platform: event
-    event_type: tapo_control_media_downloaded
+    event_type: tapo_local_media_downloaded
 action:
   - service: notify.mobile_app_phone
     data:
@@ -194,7 +194,7 @@ It also requires ONVIF support on the device. If the device is not exposing Onvi
 
 Also make sure that:
 
-- binary sensor is not disabled via entity, check .storage/core.entity_registry for disabled entities, look for "disabled_by": "user" on platform "tapo_control". If it is, remove the whole entity or change to "disabled_by": null, and restart HASS.
+- binary sensor is not disabled via entity, check .storage/core.entity_registry for disabled entities, look for "disabled_by": "user" on platform "tapo_local". If it is, remove the whole entity or change to "disabled_by": null, and restart HASS.
 - binary sensor is enabled in tapo integration options
 - onvif port 2020 on camera is opened
 </details>
@@ -382,7 +382,7 @@ Setting time is not possible through the official application and this integrati
 If the time is set incorretly, eg. 1 hour ahead:
 
 1. Ensure correct timezone is set both for Home Assistant and device
-2. If still experiencing issue, navigate to `/config/integrations/integration/tapo_control`
+2. If still experiencing issue, navigate to `/config/integrations/integration/tapo_local`
 3. Click on Configure under device you wish to synchronize time for
 4. Select `Configure time synchronization`, Submit
 5. Adjust the time offset either for period of DST, or outside of DST

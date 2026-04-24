@@ -275,7 +275,7 @@ class TapoCamEntity(Camera):
     @property
     def unique_id(self) -> str:
         return slugify(
-            f"{self._attr_extra_state_attributes['mac']}_{self._stream_unique_id}{'_direct' if self._directStream else ''}_tapo_control"
+            f"{self._attr_extra_state_attributes['mac']}_{self._stream_unique_id}{'_direct' if self._directStream else ''}_tapo_local"
         )
 
     @property
