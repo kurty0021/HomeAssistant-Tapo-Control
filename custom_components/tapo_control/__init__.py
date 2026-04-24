@@ -703,54 +703,43 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
                 enableTimeSync = False
             ts = datetime.datetime.utcnow().timestamp()
 
-            # motion detection retries
-            if motionSensor or enableTimeSync:
+# motion detection retries
+            if tapoController.isKLAP is False and (motionSensor or enableTimeSync):
                 LOGGER.debug("Motion sensor or time sync is enabled.")
                 if (
-                    not hass.data[DOMAIN][entry.entry_id]["isChild"]
-                    and not hass.data[DOMAIN][entry.entry_id]["isParent"]
+                    not hass.data[DOMAIN][entry.entry_id]["eventsDevice"]
+                    or not hass.data[DOMAIN][entry.entry_id]["onvifManagement"]
                 ):
-                    if (
-                        not hass.data[DOMAIN][entry.entry_id]["eventsDevice"]
-                        or not hass.data[DOMAIN][entry.entry_id]["onvifManagement"]
-                    ):
-                        # retry if connection to onvif failed
-                        LOGGER.debug("Setting up subscription to motion sensor...")
-                        onvifDevice = await initOnvifEvents(
-                            hass, host, username, password
-                        )
-                        if onvifDevice:
-                            LOGGER.debug(onvifDevice)
-                            hass.data[DOMAIN][entry.entry_id]["eventsDevice"] = (
-                                onvifDevice["device"]
-                            )
-                            hass.data[DOMAIN][entry.entry_id]["onvifManagement"] = (
-                                onvifDevice["device_mgmt"]
-                            )
-                            if motionSensor:
-                                await setupOnvif(hass, entry)
-                    elif (
-                        not hass.data[DOMAIN][entry.entry_id]["eventsSetup"]
-                        and motionSensor
-                    ):
-                        LOGGER.debug(
-                            "Setting up subscription to motion sensor events..."
-                        )
-                        # retry if subscription to events failed
-                        try:
-                            hass.data[DOMAIN][entry.entry_id]["eventsSetup"] = (
-                                await setupEvents(hass, entry)
-                            )
-                        except AssertionError as e:
-                            if str(e) != "PullPoint manager already started":
-                                raise AssertionError(e)
-
-                    else:
-                        LOGGER.debug("Motion sensor: OK")
-                else:
-                    LOGGER.debug(
-                        "Not updating motion sensor because device is child or parent."
+                    LOGGER.debug("Setting up subscription to motion sensor...")
+                    onvifDevice = await initOnvifEvents(
+                        hass, host, username, password
                     )
+                    if onvifDevice:
+                        LOGGER.debug(onvifDevice)
+                        hass.data[DOMAIN][entry.entry_id]["eventsDevice"] = (
+                            onvifDevice["device"]
+                        )
+                        hass.data[DOMAIN][entry.entry_id]["onvifManagement"] = (
+                            onvifDevice["device_mgmt"]
+                        )
+                        if motionSensor:
+                            await setupOnvif(hass, entry)
+                elif (
+                    not hass.data[DOMAIN][entry.entry_id]["eventsSetup"]
+                    and motionSensor
+                ):
+                    LOGGER.debug(
+                        "Setting up subscription to motion sensor events..."
+                    )
+                    try:
+                        hass.data[DOMAIN][entry.entry_id]["eventsSetup"] = (
+                            await setupEvents(hass, entry)
+                        )
+                    except AssertionError as e:
+                        if str(e) != "PullPoint manager already started":
+                            raise AssertionError(e)
+                else:
+                    LOGGER.debug("Motion sensor: OK")
 
                 if (
                     hass.data[DOMAIN][entry.entry_id]["onvifManagement"]
@@ -1182,11 +1171,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         LOGGER.debug("Entities set up.")
 
         # Needs to execute AFTER binary_sensor creation!
-        if (
-            tapoController.isKLAP is False
-            and camData["childDevices"] is None
-            and (motionSensor or enableTimeSync)
-        ):
+        if tapoController.isKLAP is False and (motionSensor or enableTimeSync):
             onvifDevice = await initOnvifEvents(hass, host, username, password)
             hass.data[DOMAIN][entry.entry_id]["eventsDevice"] = onvifDevice["device"]
             hass.data[DOMAIN][entry.entry_id]["onvifManagement"] = onvifDevice[
@@ -1323,7 +1308,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
                                                 LOGGER.error(err)
                             else:
                                 LOGGER.debug(
-                                    f"Media sync ignoring {searchResult[key]["date"]}. Media sync: {enableMediaSync}."
+                                    f"Media sync ignoring {searchResult[key]['date']}. Media sync: {enableMediaSync}."
                                 )
                 except Exception as err:
                     LOGGER.error(err)
@@ -1331,7 +1316,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
                 device["runningMediaSync"] = False
             else:
                 LOGGER.debug(
-                    f"Media sync for {device["name"]} disabled (inside mediaSync): {enableMediaSync}"
+                    f"Media sync for {device['name']} disabled (inside mediaSync): {enableMediaSync}"
                 )
 
         async def unsubscribe(event):
